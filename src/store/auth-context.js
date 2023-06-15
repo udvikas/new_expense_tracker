@@ -7,7 +7,7 @@ export const AuthContext = React.createContext({
     Logout: () => {},
 })
 
-export const AuthContextProvider = ({children}) => {
+export const AuthContextProvider = (props) => {
     const intitialToken = localStorage.getItem("tokenID");
     const [ token, setToken ] = useState(intitialToken);
     const userIsLoggedIn = !!token;
@@ -31,7 +31,7 @@ export const AuthContextProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={contextValue}>
-            {children}
+            {props.children}
         </AuthContext.Provider>
     )
 }

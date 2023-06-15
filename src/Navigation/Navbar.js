@@ -1,11 +1,23 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { AuthContext } from "../store/auth-context";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Navbar = () => {
+  const authCtx = useContext(AuthContext)
+  const navigate = useNavigate();
+  const isLoggedIn = authCtx.isLoggedIn;
+
+  const logoutHandler = () => {
+    authCtx.Logout();
+    console.log('successfully logged out!')
+
+    navigate('/');
+ }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a className="navbar-brand" href="#">
+      <h5 style={{marginLeft:'1rem'}} className="navbar-brand">
         Expense Tracker
-      </a>
+      </h5>
       <button
         className="navbar-toggler"
         type="button"
@@ -20,49 +32,18 @@ const Navbar = () => {
 
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              About us
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Contact us
-            </a>
-          </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Dropdown link
-            </a>
-            <div
-              className="dropdown-menu"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <a className="dropdown-item" href="#">
-                Action
-              </a>
-              <a className="dropdown-item" href="#">
-                Another action
-              </a>
-              <a className="dropdown-item" href="#">
-                Something else here
-              </a>
-            </div>
-          </li>
+         {!isLoggedIn && <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Signin
+            </Link>
+          </li>}
         </ul>
       </div>
+      {isLoggedIn && (
+            <li>
+              <button onClick={logoutHandler}>Logout</button>
+            </li>
+          )}
     </nav>
   );
 };
