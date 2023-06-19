@@ -1,50 +1,41 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../store/auth-context";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  const authCtx = useContext(AuthContext)
-  const navigate = useNavigate();
-  const isLoggedIn = authCtx.isLoggedIn;
+  const authCtx = useContext(AuthContext);
 
-  const logoutHandler = () => {
-    authCtx.Logout();
-    console.log('successfully logged out!')
-
-    navigate('/');
- }
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <h5 style={{marginLeft:'1rem'}} className="navbar-brand">
+    <>
+    <nav
+      style={{ display: "flex", justifyContent: "space-between" }}
+      className="navbar navbar-expand-lg navbar-dark bg-dark"
+    >
+      <h5 style={{ marginLeft: "1rem" }} className="navbar-brand">
         Expense Tracker
       </h5>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul className="navbar-nav">
-         {!isLoggedIn && <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Signin
-            </Link>
-          </li>}
-        </ul>
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+          <Link to="/home" className="nav-link active" aria-current="page">Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link active" aria-current="page">About us</Link>
+        </li>
+      {!authCtx.isLoggedIn ?  <li className="nav-item">
+          <Link to="/login" className="nav-link active" aria-current="page">Login</Link>
+        </li> : <></>}
+       {authCtx.isLoggedIn ? <li className="nav-item">
+          <Link to="/profile" className="nav-link active" aria-current="page">Profile</Link>
+        </li> : <></>}
+          </ul>
+      <div style={{ marginRight: "1.5rem"}}>
+        {authCtx.isLoggedIn ? (
+          <button onClick={authCtx.Logout}>Sign out</button>
+        ) : (
+          <></>
+        )}
       </div>
-      {isLoggedIn && (
-            <li>
-              <button onClick={logoutHandler}>Logout</button>
-            </li>
-          )}
     </nav>
+    </>
   );
 };
 
