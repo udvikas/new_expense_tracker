@@ -1,11 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef,useEffect,useState } from "react";
 import axios from "axios";
 import "./Profile.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Profile = () => {
+  const [ profile, setProfile ] = useState({
+    userName:"",
+    userPhotoUrl: ""
+  })
   const fullNameInput = useRef();
   const URLInput = useRef();
-
+  const navigate = useNavigate();
   const updateHandler = (e) => {
     e.preventDefault();
     const enteredfullName = fullNameInput.current.value;
@@ -21,19 +27,62 @@ const Profile = () => {
         returnSecureToken: true,
       })
       .then((res) => {
-        if (res.status !== 200) {
+        if (res.status === 200) {
+          return res.data;
+        } else {
           let errorMessage = "Authentication failed";
           throw new Error(errorMessage);
         }
-        return res.data;
       })
-      .then(() => {
+      .then((data) => {
         localStorage.getItem("tokenID");
+        setProfile({
+          userName:data.displayName,
+          userPhotoUrl:data.photoUrl,
+        })
         console.log("successfully updated");
+        alert("profile details have been successfully updated")
+        alert("You can edit again by clicking on Profile tab")
+        navigate("/home")
+
       })
       .catch((err) => console.log("err", err.message));
   };
 
+  useEffect(() => {
+
+    const updateProfile = () =>{
+      let url = "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAN6DmGKUsukndPy4YuaPtcJOezDqk3XXk";
+    axios.post(url, {
+      idToken: localStorage.getItem("tokenID"),
+
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.data;
+      } else {
+        let errorMessage = "Authentication failed";
+        throw new Error(errorMessage);
+      }
+      
+    })
+    .then((data) => {
+      // data.users[0].displayName && data.users[0].photoUrl
+      localStorage.getItem("tokenID");
+      console.log("successfully edited");
+      setProfile({
+        userName:data.users[0].displayName,
+        userPhotoUrl:data.users[0].photoUrl,
+      })
+    })
+    .catch((err) => console.log("err", err.message));
+    }
+    updateProfile();
+    
+  },[])
+useEffect(() => {
+  fullNameInput.current.value=profile.userName;
+  URLInput.current.value=profile.userPhotoUrl;
+})
   return (
     <>
       <div className="mainProfile">
@@ -47,7 +96,6 @@ const Profile = () => {
           </span>
         </span>
       </div>
-      <p>dummy url: https://picsum.photos/200/300</p>
       <form className="container" onSubmit={updateHandler}>
         <h5>Contact Details</h5>
         <hr />

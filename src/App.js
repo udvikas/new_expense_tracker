@@ -7,7 +7,6 @@ import { AuthContext } from "./store/auth-context";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import Userprofile from "./userProfile/Userprofile";
-
 function App() {
   const authCtx = useContext(AuthContext);
   return (

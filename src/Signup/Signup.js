@@ -38,11 +38,12 @@ export default function Signup() {
           returnSecureToken: true,
         })
         .then((res) => {
-          if (res.status !== 200) {
+          if (res.status === 200) {
+            return res.data;
+          } else{
             let errorMessage = "Authentication failed";
             throw new Error(errorMessage);
           }
-          return res.data;
         })
         .then((data) => {
           authContext.Login(data.idToken);
@@ -65,11 +66,12 @@ export default function Signup() {
           returnSecureToken: true,
         })
         .then((res) => {
-          if (res.status !== 200) {
+          if (res.ok) {
+            return res.data;
+          } else{
             let errorMessage = "Authentication failed";
             throw new Error(errorMessage);
           }
-          return res.data;
         })
         .then((data) => {
           authContext.Login(data.idToken);
@@ -162,7 +164,7 @@ export default function Signup() {
                             ref={passwordInputRef}
                           />
                         </Form.Group>
-                       {authContext.isLoggedIn ? <Form.Group
+                       {/* <Form.Group
                           className="mb-3"
                           controlId="formBasicPassword2"
                         >
@@ -172,7 +174,7 @@ export default function Signup() {
                             placeholder="Password"
                             ref={confirmPasswordInputRef}
                           />
-                        </Form.Group> : <></>}
+                        </Form.Group>  */}
                         <div className="d-grid">
                           <Button variant="primary" type="submit">
                             {isLogin ? "Login" : "Create Account"}
