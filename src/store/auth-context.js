@@ -23,7 +23,7 @@ export const AuthContextProvider = (props) => {
   const LogoutHandler = () => {
     localStorage.removeItem("tokenID");
     setToken(null);
-    console.log("logout is done");
+    console.log("Successfully Logged Out");
     navigate("/");
   };
 

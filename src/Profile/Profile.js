@@ -66,9 +66,7 @@ const Profile = () => {
       
     })
     .then((data) => {
-      // data.users[0].displayName && data.users[0].photoUrl
       localStorage.getItem("tokenID");
-      console.log("successfully edited");
       setProfile({
         userName:data.users[0].displayName,
         userPhotoUrl:data.users[0].photoUrl,

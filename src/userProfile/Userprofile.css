@@ -41,3 +41,13 @@
   .button button:active {
     transform: scale(0.95);
   }
+  .email1{
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+  }
+  .email1 button{
+    background-color: #808080;
+    color: white;
+    border: 1px solid wheat;
+  }
