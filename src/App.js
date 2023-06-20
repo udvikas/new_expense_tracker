@@ -7,6 +7,8 @@ import { AuthContext } from "./store/auth-context";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import Userprofile from "./userProfile/Userprofile";
+import Forgot from "./Forgot/Forgot";
+
 function App() {
   const authCtx = useContext(AuthContext);
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/userProfile" element=<Userprofile/>/>
         <Route path="/profile" element=<Profile/>/>
         <Route path="/login" element=<Signup/>/>
+        <Route path="/forgot" element=<Forgot/>/>
       </Routes>
     </div>
   );

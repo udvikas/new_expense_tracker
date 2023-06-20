@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { AuthContext } from "../store/auth-context";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [isLogin, setIsLogin] = useState(true);
@@ -164,17 +164,7 @@ export default function Signup() {
                             ref={passwordInputRef}
                           />
                         </Form.Group>
-                       {/* <Form.Group
-                          className="mb-3"
-                          controlId="formBasicPassword2"
-                        >
-                          <Form.Label>Confirm Password</Form.Label>
-                          <Form.Control
-                            type="password"
-                            placeholder="Password"
-                            ref={confirmPasswordInputRef}
-                          />
-                        </Form.Group>  */}
+                        <Link style={{ textDecoration: "none" }} to="/forgot"><p style={{color:"#0d6efd", textAlign:"center"}}><strong>Forgot Password</strong></p></Link>
                         <div className="d-grid">
                           <Button variant="primary" type="submit">
                             {isLogin ? "Login" : "Create Account"}
@@ -192,7 +182,6 @@ export default function Signup() {
                             type="submit"
                             onClick={switchAuthModeHandler}
                           >
-                            {/* { isLogin ? "Signup" : "Login With Existing Account"} */}
                             Signup
                           </Button>
                         </h6>

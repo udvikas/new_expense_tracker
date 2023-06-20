@@ -1,0 +1,26 @@
+.main {
+    box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    width: 60%;
+    height: 60%;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15rem;
+    margin-top: 5rem;
+    padding: 5rem;
+}
+.main input {
+    width: 400px;
+    margin-top: 3px;
+}
+button {
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+    margin-top: 7px;
+}
+.submain{
+    padding: 3rem;
+    box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
