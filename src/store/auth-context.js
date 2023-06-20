@@ -24,7 +24,7 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem("tokenID");
     setToken(null);
     console.log("Successfully Logged Out");
-    navigate("/");
+    navigate("/login");
   };
 
   const contextValue = {
