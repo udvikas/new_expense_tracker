@@ -46,6 +46,19 @@ const Navbar = () => {
           ) : (
             <></>
           )}
+          {authCtx.isLoggedIn ? (
+            <li className="nav-item">
+              <Link
+                to="/expense"
+                className="nav-link active"
+                aria-current="page"
+              >
+                Expense
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
         {authCtx.isLoggedIn ? <div style={{ marginRight: "1.5rem" }}>
           <button onClick={authCtx.Logout}>Sign out</button>

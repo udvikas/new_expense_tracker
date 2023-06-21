@@ -8,6 +8,7 @@ import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import Userprofile from "./userProfile/Userprofile";
 import Forgot from "./Forgot/Forgot";
+import ExpenseForm from "./ExpenseForm/ExpenseForm";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element=<Profile/>/>
         <Route path="/login" element=<Signup/>/>
         <Route path="/forgot" element=<Forgot/>/>
+        <Route path="/expense" element=<ExpenseForm/>/>
       </Routes>
     </div>
   );
