@@ -18,9 +18,6 @@ export default function Signup() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // const enteredEmail = emailInputRef.current.value;
-    // const enteredPassword = passwordInputRef.current.value;
-    // const enteredConfirmPassword = confirmPasswordInputRef.current.value;
 
     let url;
     if (isLogin) {
@@ -48,8 +45,10 @@ export default function Signup() {
         .then((data) => {
           authContext.Login(data.idToken);
           navigate("/userProfile");
+          localStorage.setItem("email", enteredEmail);
           console.log("successfully signedin!");
           localStorage.getItem("tokenID");
+          localStorage.getItem("email");
         })
         .catch((err) => console.log("err", err.message));
     } else {
@@ -66,7 +65,7 @@ export default function Signup() {
           returnSecureToken: true,
         })
         .then((res) => {
-          if (res.ok) {
+          if (res.status === 200) {
             return res.data;
           } else{
             let errorMessage = "Authentication failed";
@@ -76,6 +75,7 @@ export default function Signup() {
         .then((data) => {
           authContext.Login(data.idToken);
           localStorage.setItem("tokenID", data.idToken);
+          localStorage.setItem("email", enteredEmail);
           console.log(data);
           console.log("successfully Signedup!");
           navigate("/userProfile");
@@ -85,50 +85,47 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <Container>
+      <div style={{marginTop:"-2rem"}}>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
             <div className="border border-2 border-primary"></div>
             <Card className="shadow px-4">
               <Card.Body>
-                <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-2 text-center text-uppercase ">
+                <div className="mb-1 mt-md-4">
+                  <h2 className="fw-bold mb-1 text-center text-uppercase ">
                     {isLogin ? "Login" : "Sign Up"}
                   </h2>
-                  <div className="mb-3">
+                  <div className="mb-1">
                     {!isLogin ? (
                       <Form onSubmit={submitHandler}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label className="text-center">
+                        <Form.Group className="mb-1" controlId="formBasicEmail">
+                          <label className="text-center">
                             Email address
-                          </Form.Label>
+                          </label>
                           <Form.Control
                             type="email"
-                            placeholder="Enter email"
                             ref={emailInputRef}
                           />
+
                         </Form.Group>
 
                         <Form.Group
-                          className="mb-3"
+                          className="mb-1"
                           controlId="formBasicPassword1"
                         >
-                          <Form.Label>Password</Form.Label>
+                          <label>Password</label>
                           <Form.Control
                             type="password"
-                            placeholder="Password"
                             ref={passwordInputRef}
                           />
                         </Form.Group>
                         <Form.Group
-                          className="mb-3"
+                          className="mb-1"
                           controlId="formBasicPassword2"
                         >
-                          <Form.Label>Confirm Password</Form.Label>
+                          <label>Confirm Password</label>
                           <Form.Control
                             type="password"
-                            placeholder="Password"
                             ref={confirmPasswordInputRef}
                           />
                         </Form.Group>
@@ -143,12 +140,11 @@ export default function Signup() {
                     ) : (
                       <Form onSubmit={submitHandler}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label className="text-center">
+                          <label className="text-center">
                             Email address
-                          </Form.Label>
+                          </label>
                           <Form.Control
                             type="email"
-                            placeholder="Enter email"
                             ref={emailInputRef}
                           />
                         </Form.Group>
@@ -157,10 +153,9 @@ export default function Signup() {
                           className="mb-3"
                           controlId="formBasicPassword1"
                         >
-                          <Form.Label>Password</Form.Label>
+                          <label>Password</label>
                           <Form.Control
                             type="password"
-                            placeholder="Password"
                             ref={passwordInputRef}
                           />
                         </Form.Group>
@@ -205,7 +200,6 @@ export default function Signup() {
             </Card>
           </Col>
         </Row>
-      </Container>
-    </div>
+      </div>
   );
 }

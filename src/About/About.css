@@ -1,0 +1,24 @@
+.cover{
+    background-color: antiquewhite;
+    position: fixed;
+}
+.img1 {
+
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p{
+    color: black;
+    padding: 10px;
+}
+h1 {
+    text-align: center;
+}
