@@ -6,7 +6,7 @@ const About = () => {
       <div className="img1">
         <img
           src="https://www.freshbooks.com/wp-content/uploads/2022/02/expense-tracking.jpg"
-          alt="expense-image"
+          alt=""
         />
         <div>
           <h1>About us</h1>

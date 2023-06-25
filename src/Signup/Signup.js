@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { Col, Button, Row,  Card, Form } from "react-bootstrap";
 import { AuthContext } from "../store/auth-context";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ export default function Signup() {
       const enteredPassword = passwordInputRef.current.value;
 
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAN6DmGKUsukndPy4YuaPtcJOezDqk3XXk";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCM6g16Qv7IXnELyRQ7cS54ndvlSMyo8Y0";
 
       axios
         .post(url, {
@@ -56,7 +56,7 @@ export default function Signup() {
       const enteredPassword = passwordInputRef.current.value;
       const enteredConfirmPassword = confirmPasswordInputRef.current.value;
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAN6DmGKUsukndPy4YuaPtcJOezDqk3XXk";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCM6g16Qv7IXnELyRQ7cS54ndvlSMyo8Y0";
       axios
         .post(url, {
           email: enteredEmail,

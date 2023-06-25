@@ -7,7 +7,7 @@ const Userprofile = () => {
   const [color, setColor] = useState('')
   const veryfyEmailHandler = () => {
 
-    let url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAN6DmGKUsukndPy4YuaPtcJOezDqk3XXk";
+    let url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCM6g16Qv7IXnELyRQ7cS54ndvlSMyo8Y0";
     axios.post(url, {
       requestType: "VERIFY_EMAIL",
       idToken:localStorage.getItem("tokenID")
