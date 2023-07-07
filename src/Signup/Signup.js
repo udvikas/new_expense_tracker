@@ -1,13 +1,17 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useState ,useRef} from "react";
+import { useDispatch } from "react-redux";
 import { Col, Button, Row,  Card, Form } from "react-bootstrap";
-import { AuthContext } from "../store/auth-context";
+import { authActions } from "../ReduxTookit/authSlice";
+// import { AuthContext } from "../store/auth-context";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const dispatch = useDispatch();
+
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
@@ -15,6 +19,7 @@ export default function Signup() {
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -43,12 +48,9 @@ export default function Signup() {
           }
         })
         .then((data) => {
-          authContext.Login(data.idToken);
+          dispatch(authActions.login({ tokenID: data.idToken, email: enteredEmail}));
           navigate("/userProfile");
-          localStorage.setItem("email", enteredEmail);
           console.log("successfully signedin!");
-          localStorage.getItem("tokenID");
-          localStorage.getItem("email");
         })
         .catch((err) => console.log("err", err.message));
     } else {
@@ -73,9 +75,7 @@ export default function Signup() {
           }
         })
         .then((data) => {
-          authContext.Login(data.idToken);
-          localStorage.setItem("tokenID", data.idToken);
-          localStorage.setItem("email", enteredEmail);
+          dispatch(authActions.login({ tokenID: data.idToken, email: enteredEmail}));
           console.log(data);
           console.log("successfully Signedup!");
           navigate("/userProfile");

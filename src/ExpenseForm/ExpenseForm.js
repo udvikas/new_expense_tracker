@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ExpenseForm.css";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { expenseAction } from "../ReduxTookit/expenseSlice";
 const ExpenseForm = () => {
   const [expenses, setExpenses] = useState([]);
   const [editedExpense, setEditedExpense] = useState(null);
 
-  // const [expenseAmount, setExpenseAmount] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
+  const expenseList = useSelector((state) => state.expense.expenses);
+  // const totalAmount = useSelector((state) => state.expense.totalAmount);
+
   const [data, setData] = useState({
     amountD: "",
     descriptionD: "",
     categoryD: "",
   });
-  // const [ items, setItems ] = useState({
-  //   amountI:"",
-  //   descriptionI:"",
-  //   categoryI:"",
-  // })
+
   const amountRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
@@ -97,6 +95,17 @@ const ExpenseForm = () => {
         })
         .then((data) => {
           console.log("Post request is successfully sent!");
+          const newData = {
+            amount: amountE,
+            description: descriptionE,
+            category: categoryE,
+          };
+          dispatch(
+            expenseAction.addExpense({
+              expenses: [newData],
+              totalAmount: newData.amount,
+            })
+          );
         })
         .catch((err) => console.log("err", err.message));
     }
@@ -118,9 +127,24 @@ const ExpenseForm = () => {
         if (data) {
           setExpenses(Object.entries(data));
         }
+
+        const retrievedData = [];
+        let totalAmount = 0;
+       
+        for (let key in data) {
+          retrievedData.push({ id: key, ...data[key] });
+          totalAmount = Number(totalAmount) + Number(data[key].amount);
+        }
+        dispatch(
+          expenseAction.addExpense({
+            expenses: retrievedData,
+            totalAmount: totalAmount,
+          })
+        );
+
       })
       .catch((err) => console.log("err", err.message));
-  }, [email,expenses]);
+  }, [email,expenses,dispatch,expenseList.length]);
 
   function handleDelete(ID) {
     axios
@@ -230,8 +254,25 @@ const ExpenseForm = () => {
     descriptionRef.current.value = descriptionRef.current.defaultValue;
     categoryRef.current.value = categoryRef.current.defaultValue;
   };
+
+   // Calculate the total amount
+   const totalAmount = expenses.reduce(
+    (total, expense) => total + parseFloat(expense[1].amountP),
+    0
+  );
   return (
     <>
+      <div className="box">
+      <div className="amount">
+      <h5>Total Amount: {totalAmount}</h5>
+      </div>
+      <div className="premium">
+      <div> 
+      <h5>Premium Access</h5>
+        <span>Min Expense:<b>10000</b></span>
+      </div>
+      </div>
+      </div>
       <form className="form1" onSubmit={expenseSubmit}>
         <div>
           <label htmlFor="number">Expense Amount</label>
