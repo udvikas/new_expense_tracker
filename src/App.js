@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
 import Navbar from "./Navigation/Navbar";
 import Signup from "./Signup/Signup";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -15,9 +16,16 @@ import { useSelector } from "react-redux";
 function App() {
   // const authCtx = useContext(AuthContext);
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const themeMode = useSelector((state) => state.theme.theme);
+
+  useEffect(() => {
+    document.body.className = themeMode === 'dark' ? 'dark' : 'light';
+  }, [themeMode]);
+
   return (
-    <div>
-      <Navbar />
+    <>
+     <Navbar />
+      <div>
       <Routes>
         {isAuth && <Route path="/login" element=<Signup /> />}
         <Route path="/home" element=<Home /> />
@@ -29,7 +37,8 @@ function App() {
         <Route path="/expense" element=<ExpenseForm /> />
         <Route path="/about" element=<About/>/>
       </Routes>
-    </div>
+      </div>
+    </>
   );
 }
 

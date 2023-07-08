@@ -12,6 +12,9 @@
 h3{
   text-align: center;
 }
+label {
+  color: black;
+}
 input {
   margin-top: 5px;
 }
@@ -39,16 +42,18 @@ select {
 }
 
 .my-table th {
-  background-color: #f2f2f2;
+  background-color: orange;
   font-weight: bold;
+
 }
 
-.my-table tbody tr:nth-child(even) {
+/* .my-table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
-}
+} */
 
 .my-table tbody tr:hover {
   background-color: #eaf6fd;
+  color: black;
 }
 .box {
   /* border: 1px solid green; */
@@ -59,9 +64,10 @@ display: flex;
 align-items: center;
 justify-content: center;
 box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
-width: 200px;
+width: 210px;
 height: 50px;
 border-radius: 8px;
+padding: 5px;
 }
 .premium {
 display: flex;
@@ -75,4 +81,31 @@ border-radius: 8px;
 }
 span {
 margin-left: 5px;
+}
+.premium-button {
+  background-color: darkgreen;
+}
+.premium-button:hover{
+  background-color: lightgreen;
+}
+.dwl{
+ display: flex;
+ justify-content: center;
+}
+.dwl button {
+  background-color: cornflowerblue;
+}
+
+.csv {
+  border: 1px solid lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  text-decoration: none;
+  background-color: rgb(84, 180, 212);
+  color: white;
+  border-radius: 8px;
+  margin-top: 3px;
 }

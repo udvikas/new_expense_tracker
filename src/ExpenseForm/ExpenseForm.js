@@ -3,6 +3,8 @@ import "./ExpenseForm.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseAction } from "../ReduxTookit/expenseSlice";
+import { themeActions } from "../ReduxTookit/themeSlice";
+
 const ExpenseForm = () => {
   const [expenses, setExpenses] = useState([]);
   const [editedExpense, setEditedExpense] = useState(null);
@@ -10,13 +12,15 @@ const ExpenseForm = () => {
   const dispatch = useDispatch();
   const expenseList = useSelector((state) => state.expense.expenses);
   // const totalAmount = useSelector((state) => state.expense.totalAmount);
-
+  const isToggle = useSelector((state) => state.theme.toggle);
+  
+  
   const [data, setData] = useState({
     amountD: "",
     descriptionD: "",
     categoryD: "",
   });
-
+  
   const amountRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
@@ -260,17 +264,40 @@ const ExpenseForm = () => {
     (total, expense) => total + parseFloat(expense[1].amountP),
     0
   );
+  // Calculate the updated minimum expense
+  const minExpense = 10000 - totalAmount;
+  
+  const activateHandler = () => {
+    dispatch(themeActions.activateToggle())
+  }
+  
+  const title = ["Category", "Amount", "Description"];
+  const data1 = [title];
+  
+  expenses.forEach((item) => {
+    data1.push([item[1].categoryP, item[1].amountP, item[1].descriptionP]);
+  });
+  
+  const creatingCSV = data1.map((row) => row.join(",")).join("\n");
+  const blob = new Blob([creatingCSV]);
+  
+      
+  
   return (
     <>
       <div className="box">
       <div className="amount">
-      <h5>Total Amount: {totalAmount}</h5>
+      <h5>Total Amount: ${totalAmount}</h5>
       </div>
       <div className="premium">
-      <div> 
+      {totalAmount >= 10000 ? (
+        <button className="premium-button" onClick={activateHandler}>Activate Premium</button>
+      ) : (
+        <div> 
       <h5>Premium Access</h5>
-        <span>Min Expense:<b>10000</b></span>
+        <span>Req. Expense:&nbsp;<b>{minExpense}</b></span>
       </div>
+      )}
       </div>
       </div>
       <form className="form1" onSubmit={expenseSubmit}>
@@ -337,7 +364,7 @@ const ExpenseForm = () => {
           {expenses.map((expense, index) => (
             <tr key={expense[0]}>
               <td>{index + 1}</td>
-              <td>{expense[1].amountP}</td>
+              <td>${expense[1].amountP}</td>
               <td>{expense[1].descriptionP}</td>
               <td>{expense[1].categoryP}</td>
               <td>
@@ -361,6 +388,9 @@ const ExpenseForm = () => {
           ))}
         </tbody>
       </table>
+      <div className="dwl">
+      {isToggle && <a className="csv" href={URL.createObjectURL(blob)} download="expenses.csv"  id="a2">Download CSV File</a>}
+      </div>
     </>
   );
 };
