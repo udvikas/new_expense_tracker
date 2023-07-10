@@ -23,7 +23,7 @@ const Navbar = () => {
   
   return (
     <>
-      <nav className={`navigation ${isToggle ? "dark" : "light"}`}>
+      <nav className='navigation'>
         <Link to="/home" className="brand-name">
           <strong>Expense Tracker</strong>
         </Link>
@@ -59,8 +59,8 @@ const Navbar = () => {
         <div className="TAndL">
 
         {isToggle &&
-          <div className="toggle" onClick={toggleHandler}>
-            <input type="checkbox" id="toggle"  />
+          <div className="toggle">
+            <input type="checkbox" id="toggle" onClick={toggleHandler} />
             <label htmlFor="toggle"></label>
           </div>
         }

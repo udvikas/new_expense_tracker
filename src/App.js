@@ -23,7 +23,7 @@ function App() {
   }, [themeMode]);
 
   return (
-    <>
+    <div className={themeMode}>
      <Navbar />
       <div>
       <Routes>
@@ -38,7 +38,7 @@ function App() {
         <Route path="/about" element=<About/>/>
       </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
